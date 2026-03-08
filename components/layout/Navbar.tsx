@@ -71,7 +71,7 @@ export function Navbar() {
           {/* Logo */}
           <a
             href="#"
-            className="font-mono font-bold text-xl text-[#E8E8E8] hover:text-[#00F5FF] transition-colors duration-300 glow-pulse"
+            className="h-2 w-2 font-mono font-bold text-xl text-[#E8E8E8] hover:text-[#00F5FF] transition-colors duration-300 glow-pulse rounded-full"
             onClick={(e) => {
               e.preventDefault()
               window.scrollTo({ top: 0, behavior: 'smooth' })
