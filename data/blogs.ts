@@ -12,7 +12,7 @@ export const blogPosts: BlogPost[] = [
     slug: "bullmq-realtime-progress",
     title: "How I Built Real-Time Progress Tracking Inside BullMQ Queues",
     tagline: "The Problem with WebSocket + Queue Bridges No One Talks About",
-    date: "Jan 2025",
+    date: "Dec 2025",
     tags: ["Redis", "BullMQ", "WebSockets", "Node.js", "System Design"],
     content: `# Introduction
 
@@ -205,7 +205,7 @@ Whenever background workers exist in your system, design the communication layer
     slug: "docker-ec2-cicd",
     title: "Deploying a Dockerized Full-Stack App to AWS EC2 with CI/CD",
     tagline: "Everything That Went Wrong and How I Fixed It",
-    date: "Feb 2025",
+    date: "Mar 2025",
     tags: ["Docker", "GitHub Actions", "AWS EC2", "DevOps"],
     content: `# Introduction
 
@@ -358,7 +358,7 @@ GitHub Repository
     slug: "hls-adaptive-streaming",
     title: "Adaptive Bitrate Streaming — HLS from Scratch",
     tagline: "How Netflix-Style Streaming Actually Works",
-    date: "Mar 2025",
+    date: "Nov 2025",
     tags: ["FFmpeg", "HLS", "Video Processing", "Backend Systems"],
     content: `# Introduction
 

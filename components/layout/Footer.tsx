@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { Github, Linkedin, Twitter, ArrowUp } from 'lucide-react'
+import { Github, Linkedin, ArrowUp } from 'lucide-react'
 
 export function Footer() {
   const [showBackToTop, setShowBackToTop] = useState(false)
@@ -34,7 +34,7 @@ export function Footer() {
             </span>
             by
             <span className="text-[#E8E8E8]">Tirth Bhatt</span>
-            <span className="text-[#555555]">• 2025</span>
+            <span className="text-[#555555]">• 2026</span>
           </div>
 
           {/* Social Links */}
@@ -58,16 +58,6 @@ export function Footer() {
             >
               <Linkedin size={18} className="group-hover:drop-shadow-[0_0_6px_#00F5FF]" />
               <span className="hidden sm:inline font-mono text-xs">LinkedIn</span>
-            </a>
-            <a
-              href="https://twitter.com/TirthBhatt1208"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[#555555] hover:text-[#00F5FF] transition-colors group"
-              aria-label="Twitter"
-            >
-              <Twitter size={18} className="group-hover:drop-shadow-[0_0_6px_#00F5FF]" />
-              <span className="hidden sm:inline font-mono text-xs">Twitter</span>
             </a>
           </div>
         </div>

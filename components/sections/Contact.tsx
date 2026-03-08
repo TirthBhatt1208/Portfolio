@@ -23,15 +23,32 @@ export function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormState('loading')
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    setFormState('success')
-    
-    setTimeout(() => {
-      setFormState('idle')
-      setFormData({ name: '', email: '', message: '' })
-    }, 3000)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send message')
+      }
+
+      setFormState('success')
+      setTimeout(() => {
+        setFormState('idle')
+        setFormData({ name: '', email: '', message: '' })
+      }, 3000)
+    } catch (error) {
+      console.error('Submission error:', error)
+      setFormState('error')
+      setTimeout(() => {
+        setFormState('idle')
+      }, 3000)
+    }
   }
 
   return (
@@ -43,9 +60,8 @@ export function Contact() {
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <h2
-          className={`font-mono font-bold text-3xl text-[#E8E8E8] mb-16 text-center transition-all duration-700 ${
-            isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}
+          className={`font-mono font-bold text-3xl text-[#E8E8E8] mb-16 text-center transition-all duration-700 ${isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
         >
           Let's Build Something Together
         </h2>
@@ -53,9 +69,8 @@ export function Contact() {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <div
-            className={`transition-all duration-700 ${
-              isRevealed ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
-            }`}
+            className={`transition-all duration-700 ${isRevealed ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+              }`}
             style={{ transitionDelay: '200ms' }}
           >
             <div className="space-y-6">
@@ -81,7 +96,7 @@ export function Contact() {
               >
                 <Linkedin className="w-5 h-5 text-[#00F5FF]" />
                 <span className="font-mono text-[#888888] group-hover:text-[#E8E8E8] transition-colors">
-                  linkedin.com/in/tirth-bhatt-796609277
+                  LinkedIn: TirthBhatt1208
                 </span>
               </a>
 
@@ -94,7 +109,7 @@ export function Contact() {
               >
                 <Github className="w-5 h-5 text-[#00F5FF]" />
                 <span className="font-mono text-[#888888] group-hover:text-[#E8E8E8] transition-colors">
-                  github.com/TirthBhatt1208
+                  GitHub: TirthBhatt1208
                 </span>
               </a>
 
@@ -119,9 +134,8 @@ export function Contact() {
 
           {/* Contact Form */}
           <div
-            className={`transition-all duration-700 ${
-              isRevealed ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-            }`}
+            className={`transition-all duration-700 ${isRevealed ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+              }`}
             style={{ transitionDelay: '400ms' }}
           >
             <form onSubmit={handleSubmit} className="terminal p-6 space-y-6">
@@ -169,13 +183,12 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={formState === 'loading' || formState === 'success'}
-                  className={`flex items-center gap-2 px-6 py-3 font-mono font-semibold transition-all duration-300 ${
-                    formState === 'success'
-                      ? 'bg-green-500 text-[#050505]'
-                      : formState === 'error'
+                  className={`flex items-center gap-2 px-6 py-3 font-mono font-semibold transition-all duration-300 ${formState === 'success'
+                    ? 'bg-green-500 text-[#050505]'
+                    : formState === 'error'
                       ? 'border border-red-500 text-red-500'
                       : 'bg-[#00F5FF] text-[#050505] hover:-translate-y-1'
-                  }`}
+                    }`}
                 >
                   {formState === 'idle' && (
                     <>
