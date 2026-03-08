@@ -28,7 +28,7 @@ export function Projects() {
             Things I've Built
           </h2>
           <p className="font-mono text-sm text-[#555555]">
-            {'// selected works — 2023–2025'}
+            {'// selected works — 2025–2026'}
           </p>
         </div>
 
