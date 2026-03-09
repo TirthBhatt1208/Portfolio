@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams, useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, Suspense } from 'react'
 
 const STYLES = `
   @keyframes dotV {
@@ -31,7 +31,6 @@ const STYLES = `
     to   { opacity: 1; }
   }
 
-  /* Custom scrollbar for horizontal chart scrolling */
   .custom-scrollbar::-webkit-scrollbar {
     height: 6px;
     width: 6px;
@@ -61,7 +60,6 @@ function VConn({ color, h = 40, delay = 0 }: { color: string; h?: number; delay?
     )
 }
 
-// Normal left→right arrow
 function HConn({ color, w = 40, delay = 0 }: { color: string; w?: number; delay?: number }) {
     return (
         <div style={{ width: w, height: 2, position: 'relative', flexShrink: 0, alignSelf: 'center' }}>
@@ -72,7 +70,6 @@ function HConn({ color, w = 40, delay = 0 }: { color: string; w?: number; delay?
     )
 }
 
-// Reversed right→left arrow (for CD reversed flow)
 function HConnRev({ color, w = 40, delay = 0 }: { color: string; w?: number; delay?: number }) {
     return (
         <div style={{ width: w, height: 2, position: 'relative', flexShrink: 0, alignSelf: 'center' }}>
@@ -83,7 +80,6 @@ function HConnRev({ color, w = 40, delay = 0 }: { color: string; w?: number; del
     )
 }
 
-// Vertical UP arrow
 function VConnUp({ color, h = 40, delay = 0 }: { color: string; h?: number; delay?: number }) {
     return (
         <div style={{ height: h, width: 2, position: 'relative', margin: '0 auto', flexShrink: 0 }}>
@@ -147,20 +143,10 @@ function StagePill({ label, color }: { label: string; color: string }) {
 }
 
 // ─── USER FLOW ────────────────────────────────────────────────────────────────
-/*
-  User → Express (validate) → Cloudinary (store video) → URL → DB
-  ↓
-  [Metadata Queue] → FFmpeg metadata → store in DB → publish → Redis → WS → User
-  ↓
-  [Thumbnail Queue] → FFmpeg thumbnail → Cloudinary → URL in DB → publish → Redis → WS → User
-  ↓
-  [Processing Queue] → FFmpeg 240p…1080p segments + index.m3u8 + master.m3u8 → Cloudinary → DB → publish → Redis → WS → User
-*/
+
 function UserFlowDiagram() {
     return (
         <div style={{ animation: 'fadeIn 0.5s ease both' }}>
-
-            {/* Stage pills */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 28 }}>
                 <StagePill label="Upload" color="#00F5FF" />
                 <span style={{ color: '#333', fontFamily: 'monospace' }}>→</span>
@@ -169,10 +155,8 @@ function UserFlowDiagram() {
                 <StagePill label="Store & Notify" color="#4ADE80" />
             </div>
 
-            {/* Main vertical flow — center aligned */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-                {/* Row 1: User → Express → Cloudinary → DB */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
                     <Node label="User" sub="uploads video" icon="👤" color="#00F5FF" delay={0} w={120} />
                     <HConn color="#00F5FF" w={32} delay={60} />
@@ -185,7 +169,6 @@ function UserFlowDiagram() {
 
                 <VConn color="#FFB800" h={36} delay={300} />
 
-                {/* ── Metadata Queue ── */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Node label="Metadata Queue" icon="📋" color="#FFB800" tag="BullMQ" delay={320} w={200} />
                     <VConn color="#888" h={24} delay={360} />
@@ -202,7 +185,6 @@ function UserFlowDiagram() {
 
                 <VConn color="#FFB800" h={36} delay={600} />
 
-                {/* ── Thumbnail Queue ── */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Node label="Thumbnail Queue" icon="🖼️" color="#FFB800" tag="BullMQ" delay={620} w={200} />
                     <VConn color="#888" h={24} delay={660} />
@@ -219,7 +201,6 @@ function UserFlowDiagram() {
 
                 <VConn color="#FFB800" h={36} delay={900} />
 
-                {/* ── Processing Queue ── */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Node label="Processing Queue" icon="⚙️" color="#FFB800" tag="BullMQ" delay={920} w={200} />
                     <VConn color="#888" h={24} delay={960} />
@@ -240,16 +221,10 @@ function UserFlowDiagram() {
 }
 
 // ─── CI/CD FLOW ───────────────────────────────────────────────────────────────
-/*
-  CI row (left→right): git push → GitHub Actions (lint+build) → SSH into EC2
-  Arrow DOWN from EC2 into CD block
-  CD block (RIGHT→LEFT reversed): Live ← Docker Compose ← git pull ← EC2
-*/
+
 function CiCdFlowDiagram() {
     return (
         <div style={{ animation: 'fadeIn 0.5s ease both' }}>
-
-            {/* Stage pills */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 28 }}>
                 <StagePill label="Push" color="#E8E8E8" />
                 <span style={{ color: '#333', fontFamily: 'monospace' }}>→</span>
@@ -260,7 +235,6 @@ function CiCdFlowDiagram() {
                 <StagePill label="Live" color="#4ADE80" />
             </div>
 
-            {/* ── CI Row (left → right) ── */}
             <div style={{ marginBottom: 0 }}>
                 <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#FFB800', letterSpacing: '0.08em', marginBottom: 8, textAlign: 'left' }}>CI</div>
                 <div style={{ padding: '16px 20px', borderRadius: 12, background: '#0E1620', border: '1px solid #FFB80030' }}>
@@ -274,16 +248,13 @@ function CiCdFlowDiagram() {
                 </div>
             </div>
 
-            {/* Down arrow: SSH → EC2, aligned to right side where SSH node ends */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 97 }}>
                 <VConn color="#FF9500" h={36} delay={220} />
             </div>
 
-            {/* ── CD Block (right → left reversed) ── */}
             <div>
                 <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#A78BFA', letterSpacing: '0.08em', marginBottom: 8, textAlign: 'left' }}>CD</div>
                 <div style={{ padding: '16px 20px', borderRadius: 12, background: '#110E1A', border: '1px solid #A78BFA30' }}>
-                    {/* EC2 → git pull → Docker Compose → Live */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
                         <Node label="EC2 Instance" sub="AWS server" icon="☁️" color="#FF9500" delay={240} w={145} />
                         <HConn color="#00F5FF" w={36} delay={300} />
@@ -311,8 +282,8 @@ function DiagramSection({ diagram, isFirst, refProp }: {
         <div ref={refProp} className={`py-10 sm:py-14 px-4 sm:px-6 ${isFirst ? '' : 'border-t border-[#111]'}`}>
             <div className="max-w-5xl mx-auto">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 mb-6 sm:mb-8">
-                    <span 
-                        className="self-start sm:self-auto font-mono text-[10px] tracking-widest px-3 py-1 rounded-full" 
+                    <span
+                        className="self-start sm:self-auto font-mono text-[10px] tracking-widest px-3 py-1 rounded-full"
                         style={{ background: `${diagram.accent}15`, color: diagram.accent, border: `1px solid ${diagram.accent}30` }}
                     >
                         {diagram.badge}
@@ -327,7 +298,6 @@ function DiagramSection({ diagram, isFirst, refProp }: {
                         </span>
                     )}
                 </div>
-                {/* Horizontal scrollable wrapper for small screens */}
                 <div className="rounded-2xl p-4 sm:p-8 overflow-x-auto bg-[#0A0A0A] custom-scrollbar" style={{ border: `1px solid ${diagram.accent}20`, boxShadow: `0 0 40px ${diagram.accent}08` }}>
                     <div className="min-w-[700px] flex flex-col items-center">
                         {diagram.id === 'user-flow' ? <UserFlowDiagram /> : <CiCdFlowDiagram />}
@@ -345,7 +315,8 @@ const diagrams = [
     { id: 'cicd-flow', title: 'CI/CD Flow', subtitle: 'Push → CI → SSH → Deploy → Live', badge: 'INFRASTRUCTURE', accent: '#A78BFA' },
 ]
 
-export default function ArchitecturePage() {
+// ── Inner component that uses useSearchParams ──
+function ArchitecturePageInner() {
     const router = useRouter()
     const searchParams = useSearchParams()
     const focus = searchParams.get('focus') ?? 'user-flow'
@@ -400,5 +371,14 @@ export default function ArchitecturePage() {
 
             <div className="pb-20" />
         </div>
+    )
+}
+
+// ── Default export wrapped in Suspense ──
+export default function ArchitecturePage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A]" />}>
+            <ArchitecturePageInner />
+        </Suspense>
     )
 }
