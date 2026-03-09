@@ -205,7 +205,7 @@ Whenever background workers exist in your system, design the communication layer
     slug: "docker-ec2-cicd",
     title: "Deploying a Dockerized Full-Stack App to AWS EC2 with CI/CD",
     tagline: "Everything That Went Wrong and How I Fixed It",
-    date: "Mar 2025",
+    date: "Mar 2026",
     tags: ["Docker", "GitHub Actions", "AWS EC2", "DevOps"],
     content: `# Introduction
 

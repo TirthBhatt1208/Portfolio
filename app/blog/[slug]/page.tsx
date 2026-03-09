@@ -17,7 +17,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const post = blogPosts.find((p) => p.slug === slug)
-  
+
   if (!post) {
     return {
       title: 'Post Not Found',
@@ -40,46 +40,70 @@ export default async function BlogPostPage({ params }: Props) {
 
   // Parse markdown-like content to HTML
   const parseContent = (content: string) => {
-    return content
-      .split('\n\n')
-      .map((block, index) => {
-        // Headers
-        if (block.startsWith('# ')) {
+    // Split by code blocks first so we don't break code blocks that contain empty lines
+    const parts = content.split(/(```[\s\S]*?```)/g);
+
+    return parts.map((part, index) => {
+      // Code blocks
+      if (part.startsWith('```')) {
+        const lines = part.trim().split('\n');
+        // Extract the code content, ignoring the first line (```language) and the last line (```)
+        const code = lines.slice(1, -1).join('\n');
+        return (
+          <pre key={`code-${index}`} className="my-6 p-6 bg-[#0A0A0A] border border-[#00F5FF]/20 overflow-x-auto rounded-lg">
+            <code className="font-mono text-sm text-[#888888] whitespace-pre">
+              {code}
+            </code>
+          </pre>
+        );
+      }
+
+      // Process regular text content
+      return part.split('\n\n').map((block, bIndex) => {
+        const trimmedBlock = block.trim();
+        if (!trimmedBlock) return null;
+
+        const key = `text-${index}-${bIndex}`;
+
+        // H1 Headers (mapped to h2 visually)
+        if (trimmedBlock.startsWith('# ')) {
           return (
-            <h2 key={index} className="font-mono font-bold text-2xl text-[#E8E8E8] mt-12 mb-6">
-              <span className="text-[#00F5FF]">#</span> {block.slice(2)}
+            <h2 key={key} className="font-mono font-bold text-2xl text-[#E8E8E8] mt-12 mb-6">
+              <span className="text-[#00F5FF]">#</span> {trimmedBlock.slice(2)}
             </h2>
-          )
+          );
         }
-        
-        // Code blocks
-        if (block.startsWith('```')) {
-          const lines = block.split('\n')
-          const code = lines.slice(1, -1).join('\n')
+
+        // H2 Headers
+        if (trimmedBlock.startsWith('## ')) {
           return (
-            <pre key={index} className="my-6 p-6 bg-[#0A0A0A] border border-[#00F5FF]/20 overflow-x-auto">
-              <code className="font-mono text-sm text-[#888888] whitespace-pre">
-                {code}
-              </code>
-            </pre>
-          )
+            <h3 key={key} className="font-mono font-bold text-xl text-[#E8E8E8] mt-8 mb-4">
+              <span className="text-[#A78BFA]">##</span> {trimmedBlock.slice(3)}
+            </h3>
+          );
+        }
+
+        // Dividers
+        if (trimmedBlock === '---') {
+          return <div key={key} className="h-px w-full bg-[#1A1A1A] my-10" />;
         }
 
         // Inline code
-        const processedBlock = block.replace(
+        const processedBlock = trimmedBlock.replace(
           /`([^`]+)`/g,
-          '<code class="px-1.5 py-0.5 bg-[#0A0A0A] border border-[#1A1A1A] font-mono text-sm text-[#00F5FF]">$1</code>'
-        )
+          '<code class="px-1.5 py-0.5 bg-[#0A0A0A] border border-[#1A1A1A] font-mono text-sm text-[#00F5FF] rounded">$1</code>'
+        );
 
         // Regular paragraph
         return (
           <p
-            key={index}
-            className="font-sans text-[#888888] leading-relaxed my-4"
+            key={key}
+            className="font-sans text-[#888888] leading-relaxed my-4 whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: processedBlock }}
           />
-        )
-      })
+        );
+      });
+    });
   }
 
   return (

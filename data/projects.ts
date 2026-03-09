@@ -43,7 +43,7 @@ export const projects: Project[] = [
       "Full generation history stored in PostgreSQL + Prisma"
     ],
     github: "https://github.com/TirthBhatt1208/VibeStudio",
-    liveDemo: "https://vibe-studio-n5dakdq47-worktirth1208-7870s-projects.vercel.app"
+    liveDemo: "https://vibe-studio-five.vercel.app/"
   },
   {
     id: "videotube",
