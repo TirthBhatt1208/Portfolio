@@ -22,7 +22,7 @@ export function Hero() {
 
   useEffect(() => {
     const currentFullText = typingTexts[currentTextIndex]
-    
+
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         if (displayText.length < currentFullText.length) {
@@ -68,9 +68,8 @@ export function Hero() {
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         {/* Name with Glitch Effect */}
         <h1
-          className={`glitch font-mono font-extrabold text-[clamp(48px,10vw,120px)] leading-none mb-6 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`glitch font-mono font-extrabold text-[clamp(48px,10vw,120px)] leading-none mb-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
           data-text="TIRTH BHATT"
           style={{ transitionDelay: "300ms" }}
         >
@@ -79,9 +78,8 @@ export function Hero() {
 
         {/* Typing Subtitle */}
         <div
-          className={`h-8 mb-6 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`h-8 mb-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
           style={{ transitionDelay: "600ms" }}
         >
           <span className="font-mono text-xl text-[#00F5FF] typing-cursor">
@@ -91,9 +89,8 @@ export function Hero() {
 
         {/* One-liner */}
         <p
-          className={`font-sans text-lg text-[#888888] mb-12 max-w-2xl mx-auto transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`font-sans text-lg text-[#888888] mb-12 max-w-2xl mx-auto transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
           style={{ transitionDelay: "900ms" }}
         >
           I build fast, scalable web apps — from pixel-perfect frontends to
@@ -102,9 +99,8 @@ export function Hero() {
 
         {/* CTA Buttons */}
         <div
-          className={`flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
           style={{ transitionDelay: "1200ms" }}
         >
           <a
@@ -139,7 +135,7 @@ export function Hero() {
 
           <a
             href="/resume.pdf"
-            download="Tirth_Bhatt_Resume.pdf"
+            download="tirth-bhatt-resume.pdf"
             className="group px-8 py-3 border border-[#FFB800] text-[#FFB800] font-mono font-semibold hover:bg-[#FFB800] hover:text-[#050505] hover:-translate-y-1 transition-all duration-300"
           >
             Download Resume
@@ -149,9 +145,8 @@ export function Hero() {
 
       {/* Scroll Indicator */}
       <div
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 transition-all duration-1000 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        }`}
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
         style={{ transitionDelay: "1500ms" }}
       >
         <ArrowDown className="text-[#555555] animate-bounce" size={24} />
