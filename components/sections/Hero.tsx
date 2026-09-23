@@ -134,7 +134,7 @@ export function Hero() {
           </a>
 
           <a
-            href="/resume.pdf"
+            href="/Tirth-Bhatt-Resume-1208.pdf"
             download="tirth-bhatt-resume.pdf"
             className="group px-8 py-3 border border-[#FFB800] text-[#FFB800] font-mono font-semibold hover:bg-[#FFB800] hover:text-[#050505] hover:-translate-y-1 transition-all duration-300"
           >
