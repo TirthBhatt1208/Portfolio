@@ -20,7 +20,7 @@ export function ResumeBanner() {
         </p>
 
         <a
-          href="/resume.pdf"
+          href="/Tirth-Bhatt-Resume-1208.pdf"
           download="tirth-bhatt-resume.pdf"
           className="group inline-flex items-center gap-3 px-8 py-4 bg-[#00F5FF] text-[#050505] font-mono font-semibold hover:bg-[#FFB800] hover:-translate-y-1 transition-all duration-300"
         >

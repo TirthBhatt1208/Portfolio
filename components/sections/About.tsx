@@ -14,7 +14,7 @@ const highlightText = (text: string, keywords: string[]) => {
   return result
 }
 
-const bioText = `I'm a Computer Engineering student at VVP Engineering College, Rajkot — in my 3rd year and obsessed with building things that actually work at scale.
+const bioText = `I'm a Computer Engineering student at VVP Engineering College, Rajkot — in my final year and obsessed with building things that actually work at scale.
 
 I don't just write code — I build systems. From real-time video processing pipelines to AI-powered coding platforms, I enjoy solving problems that go beyond CRUD and require thinking in queues, sockets, and distributed architecture.
 
@@ -31,7 +31,7 @@ const statCards = [
   },
   {
     icon: Calendar,
-    title: '3rd Year — B.E.',
+    title: 'final Year — B.E.',
     subtitle: 'Computer Engg.',
     detail: '2023 – 2027'
   },
